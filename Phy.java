@@ -32,7 +32,7 @@ class PhysiologicalperiodFrame extends Frame implements ActionListener {
   lab6 = new Label("平均行经周期（天）");
   lab7 = new Label("月经期");
   lab8 = new Label("安全期");
-  lab9 = new Label("危险期");
+  lab9 = new Label("排卵期");
   Enter = new Button("查询");
   text1 = new TextField();
   text2 = new TextField();
@@ -47,24 +47,24 @@ class PhysiologicalperiodFrame extends Frame implements ActionListener {
   pNorth.setLayout(null);  
   pNorth.setBounds(0,0,300,900);
   
-  lab1.setBounds(170,15,100,20);//设置控件位置
-  lab2.setBounds(380,15,20,20);
-  lab3.setBounds(460,15,20,20);
-  lab4.setBounds(540,15,20,20); 
-  lab5.setBounds(170,50,120,20);
-  lab6.setBounds(400,50,120,20);
+  lab1.setBounds(90,15,100,20);//设置控件位置
+  lab2.setBounds(300,15,20,20);
+  lab3.setBounds(380,15,20,20);
+  lab4.setBounds(460,15,20,20); 
+  lab5.setBounds(90,50,120,20);
+  lab6.setBounds(320,50,120,20);
   lab7.setBounds(10,130,50,20);
   lab8.setBounds(10,160,50,20);
   lab9.setBounds(10,190,50,20);
-  Enter.setBounds(260,80,300,40);
-  text1.setBounds(300,15,80,20);
-  text2.setBounds(420,15,40,20);
-  text3.setBounds(500,15,40,20);
-  text4.setBounds(300,50,80,20);
-  text5.setBounds(530,50,80,20);
-  text6.setBounds(60,130,810,20);
-  text7.setBounds(60,160,810,20);
-  text8.setBounds(60,190,810,20);
+  Enter.setBounds(180,80,300,40);
+  text1.setBounds(220,15,80,20);
+  text2.setBounds(340,15,40,20);
+  text3.setBounds(420,15,40,20);
+  text4.setBounds(220,50,80,20);
+  text5.setBounds(450,50,80,20);
+  text6.setBounds(60,130,600,20);
+  text7.setBounds(60,160,600,20);
+  text8.setBounds(60,190,600,20);
 
   Enter.addActionListener(this);  //添加指定的动作侦听器
 
@@ -107,18 +107,18 @@ class PhysiologicalperiodFrame extends Frame implements ActionListener {
     int[] DAY1 = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int[] DAY2 = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     	  if (month == 2) {
-    	   if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
+    	   if (((year % 4 == 0) || (year % 100 != 0)) || (year % 400 == 0)) {
     	    System.arraycopy(DAY2, 0, DAY, 0, 12);
     	   } 
     	  }
-    	  System.arraycopy(DAY1, 0, DAY, 0, 12);
+    	  else System.arraycopy(DAY1, 0, DAY, 0, 12);
     	  
     if (month > 12 || month < 1 || year < 1) {     //错误月份输入的处理
      JOptionPane.showMessageDialog(null, "请输入正确的日期"); 
      return;
     } 
   
-    if(day<1 || day>DAY[month-1]){ //错误日期输入的处理
+    if(day<1 || day > DAY[month-1]){ //错误日期输入的处理
     	JOptionPane.showMessageDialog(null,"请输入正确的日期");
     }
     
@@ -141,9 +141,9 @@ class PhysiologicalperiodFrame extends Frame implements ActionListener {
 	   JOptionPane.showMessageDialog(null, "请输入正确的月经周期或行经周期");
    		} 
   	}
-  text6.setText(yjq1(year, month, day)+" 和 "+yjq2(year, month, day));	//输出月经期
-  text7.setText(aqq1(year, month, day)+" 和 "+aqq2(year, month, day));	//输出安全期
-  text8.setText(plq1(year, month, day)+" 和 "+plq2(year, month, day));	//输出危险期
+  text6.setText("当月："+yjq1(year, month, day)+"                         次月： "+yjq2(year, month, day));	//输出月经期
+  text7.setText("当月："+aqq1(year, month, day)+"  次月"+aqq2(year, month, day));	//输出安全期
+  text8.setText("当月："+plq1(year, month, day)+"                         次月： "+plq2(year, month, day));	//输出危险期
  }
  
  
@@ -163,11 +163,11 @@ public String yjq1 (int y, int m, int d) { //上次月经的日期输出
 	    	  
 	  if(d+pjxjq>DAY[m-1]){ //月经持续到下个月
 	    	if(m+1>12){  //月经跨年
-	    		return(y+"年"+m+"月"+d+"日"+"到"+(y+1)+"年"+"1月"+(pjxjq-DAY[m-1]+d-1)+"日");//跨年
+	    		return(y+"."+m+"."+d+""+"-"+(y+1)+"."+"1."+(pjxjq-DAY[m-1]+d-1)+"");//跨年
 	    	}
-	    	else return(y+"年"+m+"月"+d+"日"+"到"+y+"年"+(m+1)+"月"+(pjxjq-DAY[m-1]+d-1)+"日");//跨月
+	    	else return(y+"."+m+"."+d+""+"-"+y+"."+(m+1)+"."+(pjxjq-DAY[m-1]+d-1)+"");//跨月
 	    }
-	  else return(y+"年"+m+"月"+d+"日"+"到"+(y)+"年"+m+"月"+(pjxjq+d-1)+"日");//没有跨月
+	  else return(y+"."+m+"."+d+""+"—"+(y)+"."+m+"."+(pjxjq+d-1)+"");//没有跨月
  }
 public String yjq2(int y, int m, int d) {//下次月经的输出，主要是调用yjq1
 	 /*
@@ -210,26 +210,26 @@ public String aqq1 (int y, int m, int d) { 	//上次月经后的安全期
 	   int i; //排卵期开始
 	   int j;//排卵期结束
 	   int tem = d+pjyjq-14; //排卵期距上次月经时间（天）
-	   i = tem - 5;
-	   j = tem + 4;
-		  if(i	<= DAY[m-1] && j > DAY[m-1] ){ //判断安全期是否跨年 跨月  然后输出
+	   i = tem - 4;
+	   j = tem + 3;
+		  if(i	< DAY[m-1] && j > DAY[m-1] ){ //判断安全期是否跨年 跨月  然后输出
 		    	if(m+1>12){	    		
-		    		return((y+1)+"年"+"1月"+(pjxjq-DAY[m-1]+d)+"日"+"到"+y+"年"+m+"月"+(i-1)+"日"+" 和 "
-		    	+(y+1)+"年"+"1月"+(j-DAY[m-1]+1)+"日"+"到"+(y+1)+"年"+"1月"+(d+pjyjq-DAY[m-1])+"日");
+		    		return((y+1)+"."+"1."+(pjxjq-DAY[m-1]+d)+""+"-"+y+"."+m+"."+(i-1)+""+" 和 "
+		    	+(y+1)+"."+"1."+(j-DAY[m-1]+1)+""+"-"+(y+1)+"."+"1."+(d+pjyjq-DAY[m-1])+".");
 		    	}
-		    	else return(y+"年"+(m+1)+"月"+(pjxjq-DAY[m-1]+d)+"日"+"到"+y+"年"+m+"月"+(i-1)+"日"+" 和 "
-		    	+y+"年"+(m)+"月"+(j-DAY[m-1]+1)+"日"+"到"+y+"年"+(m)+"月"+(d+pjyjq-DAY[m-1])+"日");
+		    	else return(y+"."+(m)+"."+(pjxjq+d)+""+"-"+y+"."+m+"."+(i-1)+""+" 和 "
+		    	+y+"."+(m+1)+"."+(j-DAY[m-1]+1)+""+"-"+y+"."+(m+1)+"."+(d+pjyjq-DAY[m-1])+"");
 		    }
-		  else if(i	> DAY[m-1]){
+		  else if(i	>= DAY[m-1]){
 			  if(m+1>12){	    		
-		    		return((y+1)+"年"+"1月"+(pjxjq-DAY[m-1]+d)+"日"+"到"+(y+1)+"年"+"1月"+(i-DAY[m-1]-1)+"日"+" 和 "
-			  +(y+1)+"年"+"1月"+(j-DAY[m-1]+1)+"日"+"到"+(y+1)+"年"+"1月"+(d+pjyjq-DAY[m-1])+"日");
+		    		return((y+1)+"."+"1."+(pjxjq-DAY[m-1]+d)+""+"-"+(y+1)+"."+"1."+(i-DAY[m-1]-1)+""+" 和 "
+			  +(y+1)+"."+"1."+(j-DAY[m-1]+1)+""+"-"+(y+1)+"."+"1."+(d+pjyjq-DAY[m-1])+"");
 		    	}
-		    	else return(y+"年"+(m+1)+"月"+(pjxjq-DAY[m-1]+d)+"日"+"到"+y+y+"年"+(m+1)+"月"+(i-DAY[m-1]-1)+"日"+" 和 "
-		    	+y+"年"+(m)+"月"+(j-DAY[m-1]+1)+"日"+"到"+y+"年"+(m)+"月"+(d+pjyjq-DAY[m-1])+"日");
+		    	else return((y)+"."+(m+1)+"."+(pjxjq+d-DAY[m-1])+""+"-"+y+"."+(m+1)+"."+(i-DAY[m-1]-1)+""+" 和 "
+		    	+y+"."+(m+1)+"."+(j-DAY[m-1]+1)+""+"-"+y+"."+(m+1)+"."+(d+pjyjq-DAY[m-1]-1)+"");
 		  } 
-		  else return((y)+"年"+m+"月"+(pjxjq+d)+"日"+"到"+y+"年"+m+"月"+(i-1)+"日"+" 和 "
-		  +y+"年"+(m)+"月"+(j+1)+"日"+"到"+y+"年"+(m)+"月"+(d+pjyjq-1)+"日");
+		  else return((y)+"."+m+"."+(pjxjq+d)+""+"-"+y+"."+m+"."+(i-1)+""+" 和 "
+		  +y+"."+(m)+"."+(j+1)+""+"-"+y+"."+(m)+"."+(d+pjyjq-1)+"");
 
 }
 public String aqq2(int y, int m, int d) {//下次月经后的安全期，主要调用aqq1
@@ -272,21 +272,21 @@ public String plq1 (int y, int m, int d) { 	//上次月经后的排卵期
 	   int i; //排卵期开始
 	   int j;//排卵期结束
 	   int tem = d+pjyjq-14; //排卵期距上次月经时间（天）
-	   i = tem - 5;
-	   j = tem + 4;
+	   i = tem - 4;
+	   j = tem + 3;
 	   if(i	<= DAY[m-1] && j > DAY[m-1] ){
 	    	if(m+1>12){	    		
-	    		return(y+"年"+m+"月"+i+"日"+"到"+(y+1)+"年"+"1月"+(j-DAY[m-1])+"日");
+	    		return(y+"."+m+"."+i+""+"-"+(y+1)+"."+"1."+(j-DAY[m-1])+"");
 	    	}
-	    	else return(y+"年"+m+"月"+i+"日"+"到"+y+"年"+(m+1)+"月"+(j-DAY[m-1])+"日");
+	    	else return(y+"."+m+"."+i+"."+"-"+y+"."+(m+1)+"."+(j-DAY[m-1])+"");
 	    }
 	  else if(i	> DAY[m-1]){
 		  if(m+1>12){	    		
-	    		return((y+1)+"年"+"1月"+(i-DAY[m-1])+"日"+"到"+(y+1)+"年"+"1月"+(j-DAY[m-1])+"日");
+	    		return((y+1)+"."+"1."+(i-DAY[m-1])+""+"-"+(y+1)+"."+"1."+(j-DAY[m-1])+"");
 	    	}
-	    	else return(y+"年"+(m+1)+"月"+(i-DAY[m-1])+"日"+"到"+y+"年"+(m+1)+"月"+(j-DAY[m-1])+"日");
+	    	else return(y+"."+(m+1)+"."+(i-DAY[m-1])+""+"-"+y+"."+(m+1)+"."+(j-DAY[m-1])+"");
 	  } 
-	  else return(y+"年"+m+"月"+i+"日"+"到"+y+"年"+(m)+"月"+j+"日");
+	  else return(y+"."+m+"."+i+""+"-"+y+"."+(m)+"."+j+"");
 
 }
 public String plq2(int y, int m, int d) {//下次月经后的排卵期，主要调用plq1
@@ -318,7 +318,7 @@ public  Phy() {//类函数
 
   PhysiologicalperiodFrame frame = new PhysiologicalperiodFrame();
   frame.setTitle("生理期计算");
-  frame.setBounds(250,250,900,280);//大小
+  frame.setBounds(250,250,700,280);//大小
   frame.setVisible(true);  //显示窗口
   frame.validate(); //使生效
   frame.addWindowListener(new java.awt.event.WindowAdapter() {  //点击叉号关闭frame程序

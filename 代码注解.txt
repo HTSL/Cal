@@ -1,0 +1,17 @@
+项目：mycalutor
+小组：HTSL（桦，童，升，龙）
+	刘桦（老师），侯天童，毛升润，张新龙
+
+代码包括
+
+menu.java（主界面代码
+bmi.java （BMI计算
+Calculator.java （科学计算器
+CalendarMainClass.java (日历
+CountDown.java （计时器
+Phy.java（生理期计算
+Rmb.java （人民币大小写转换
+SysTool.java （系统工具调用
+Timer.java （秒表
+
+九个文件，运行menu.java即可进入程序。
